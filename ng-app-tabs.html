@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>angular tabs test</title>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+    <script>
+   //  var theTabs = {
+   //    "Account" : {
+   //        "id" : "account",
+   //        "helpText" : "Account Help"
+   //    },
+   //    "Mailbox" : {
+   //        "id" : "mailbox",
+   //        "helpText" : "Mailbox Help"
+   //    },
+   //    "Reply As" : {
+   //        "id" : "reply-as",
+   //        "helpText" : "Reply As Help"
+   //    },
+   //    "Mail Permissions" : {,
+   //        "id" : "permissions",
+   //        "helpText" : "Mail Permissions Help"
+   //    },
+   //    "Delegates" : {
+   //        "id" : "delegates",
+   //        "helpText" : "Delegates Help"
+   //    }
+   //}
+
+    function buildTabs($scope) {
+        $scope.theTabs = {
+            "Account" : {
+                "id" : "account",
+                "helpText" : "Account Help"
+            },
+            "Mailbox" : {
+                "id" : "mailbox",
+                "helpText" : "Mailbox Help"
+            },
+            "Reply As" : {
+                "id" : "reply-as",
+                "helpText" : "Reply As Help"
+            },
+            "Mail Permissions" : {
+                "id" : "permissions",
+                "helpText" : "Mail Permissions Help"
+            },
+            "Delegates" : {
+                "id" : "delegates",
+                "helpText" : "Delegates Help"
+            }
+        }
+
+    }
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+
+<div ng-controller="buildTabs">
+
+<ul class="nav nav-tabs">
+  <li ng-repeat="(key,value) in theTabs" class="active"><a href="#{{values.id}}" data-toggle="tab">{{key}}</a></li>
+</ul>
+
+
+<div class="tab-content" >
+
+<div style="background-color:red" ng-repeat="(key,value) in theTabs" id="{{values.id}}" class="tab-pane">
+
+<h2> {{key}} Tab</h2>
+
+</div>
+<!-- end #delegates-tab -->
+
+</div>
+
+</body>
+</html>
