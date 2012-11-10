@@ -12,8 +12,6 @@ $(function(){
 
   $('#status-select').val('Auto').attr('selected', 'selected');
 
-
-
 	$('#activate-office365-button').on('click',function(){ 
 		$('#office365-forwarding').fadeIn();
 		$('.office365-agree').hide();

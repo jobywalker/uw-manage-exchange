@@ -3,8 +3,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         concat: {
             dist: {
-                src: ['./js/bootstrap.min.js', './js/exchange.js],
-                dest: 'dist/built.js'
+                src: ['./js/bootstrap.min.js', './js/exchange.js'],
+                dest: 'dist/exchange.concat.js'
             }
         }
     });
