@@ -28,6 +28,12 @@ body {
     display:none;
 }
 
+#exchange-address,
+#exchange-link,
+#other-message {
+  display:none;
+}
+
 /* 
 #office365-forwarding {
 	display: none; 

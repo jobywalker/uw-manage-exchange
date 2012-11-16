@@ -1,34 +1,71 @@
 /* global $ */
 
+// https://github.com/h5bp/html5-boilerplate/blob/master/js/plugins.js
+// Avoid `console` errors in browsers that lack a console.
+(function() {
+    var method;
+    var noop = function noop() {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+
+        // Only stub undefined methods.
+        if (!console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+
 (function () {
 
     'use strict';
 
+
     var exchangeApp = {};
 
+    //exchangeApp.ajaxConsoleLog = function () {
+    //    var jqXHR = {},
+    //        textStatus;
+    //    console.log('jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
+    //};
+
     exchangeApp.accountStatus = {
-        "Default": {
+        "default": {
+            "name" : "Default",
             "id" : "status-auto",
             "helpText" : "Automatic help text",
             "modalMessage": "Automatic message"
         },
-        "UW Exchange": {
+        "exchange": {
+            "name" : "UW Exchange",
             "id" : "status-uw-exchange",
             "helpText" : "UW Exchange help text",
             "modalMessage": "UW Exchange message"
         },
-        "Exchange Local": {
+        "local": {
+            "name" : "exchange Local",
             "id" : "status-exchange-local",
             "helpText" : "Exchange Local help text",
             "modalMessage": "UW Exchange Local message"
         },
-        "Exchange GAL Only": {
+        "gal": {
+            "name" : "Exchange GAL Only",
             "id" : "status-gal",
             "helpText" : "GAL help text",
             "modalMessage": "UW Exchange GAL Only message",
             "otherMessage" : "You only appear in the Exchange GAL but do not have access to email, etc."
         },
-        "Off": {
+        "off": {
+            "name" : "Off",
             "id" : "status-off",
             "helpText" : "Off help text",
             "modalMessage": "Turning off UW Exchange. This is a destructive action and will do x and y.",
@@ -85,7 +122,7 @@
     }
     
     exchangeApp.addButton = function (clickedStatus, tabId, placeSuccess) {
-        $('#' + tabId).append('<br/><br/>' + 
+        $('#' + tabId).append('<br/><br/><hr/>' + 
         '<button type="button" class="save-changes btn btn-primary" data-loading-text="Saving...">Save Changes</button>');
         $('.save-changes').button().click(function() {
             exchangeApp.saveModal(clickedStatus);
@@ -105,7 +142,7 @@
         var offOrGALMessage = function (offOrGAL) {
             //$('#settings').hide();
              exchangeApp.showSettings.display(false);
-            $('#new-address, #exchange-link').hide();
+            $('#exchange-address, #exchange-link').hide();
             $('#other-message').html(offOrGAL).fadeIn();
         }
         if (statusSet === 'Off') {
@@ -121,29 +158,6 @@
 
     }
     
-    exchangeApp.showSettings = {
-        bind: function () {
-            $('#show-settings').click(function() {
-                $('#settings').fadeIn();
-            });
-        },
-        display : function (value) {
-            if (value === true) {
-                $('#settings').show();
-
-            } else if (value === false) {
-                $('#settings').hide();
-            }
-        }
-    }
-
-    
-    exchangeApp.setStatus = function (yourStatus) {
-        $('#' + yourStatus).parent().attr('data-selected', 'true');
-        var serviceStatus = $('li[data-selected="true"] a').text();
-        $('#service-status').text(serviceStatus);
-    }
-    
     exchangeApp.statusDropdown = function () {
         $('#status-dropdown li a').click(function(){
             var clicked = $(this).text()
@@ -151,12 +165,47 @@
         });
     }
 
+    exchangeApp.adjustSettings = {
+        bind: function () {
+            $('#show-settings').click(function() {
+                $('#bottom-container').fadeIn();
+            });
+        },
+        display: function (boolean) {
+            if (value === true) {
+                $('#bottom-container').show();
+
+            } else if (value === false) {
+                $('#bottom-container').hide();
+            }
+        }
+    }
+
+    exchangeApp.tabsDisplay = {
+        account: function (boolean) {
+        //
+        },
+        permissions: function (boolean) { 
+        //
+        },
+        mailbox: function (boolean) {
+        //     
+        }
+    }
+
+    exchangeApp.setStatus = function (yourStatus) {
+        $('#' + yourStatus).parent().attr('data-selected', 'true');
+        var serviceStatus = $('li[data-selected="true"] a').text();
+        $('#service-status').text(serviceStatus);
+    }
+    
+
     exchangeApp.helpText = {
         bind : function () {
             $('.help').click(function() {
                 console.log('help for = ' + $('#service-status').text());
                 var serviceStatus = $('#service-status').text(),
-                helpText = exchangeApp.accountStatus[serviceStatus].helpText;
+                    helpText = exchangeApp.accountStatus[serviceStatus].helpText;
                 $('#account-tab .help-well').toggle().html(helpText);
             });
         },
@@ -172,21 +221,38 @@
     }
 
     $(function(){
+        //console.log('document ready');
         // https://uwnetid.washington.edu/nws/v1/uwnetid/jtate/exchange.json
-        // first enable the bootstrap plugins we need
-        //$('.help').popover({'trigger':'hover'});
+        exchangeApp.adjustSettings.bind();
 
-        exchangeApp.setStatus('status-auto');
-        // bind the showSettings stuff
-        exchangeApp.showSettings.bind();
-        // this is more binding, but of the lame kind
-        exchangeApp.statusDropdown();
+        $.ajax({
+            url: 'user.json',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data, textStatus, jqXHR) {
+                console.log(':) Success: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
+                console.log('user status is ' + data.status);
+                var leadStatus = data.status;
+                $('#lead-account-status').append(exchangeApp.accountStatus[leadStatus].name);
+                $('#other-message').show().text(exchangeApp.accountStatus[leadStatus].otherMessage)
+                if (data.status === 'gal') {
+                    //
+                } else {
+                    exchangeApp.setStatus('status-auto');
+                    // bind the showSettings stuff
+                    // this is more binding, but of the lame kind
+                    exchangeApp.statusDropdown();
+                    exchangeApp.helpText.bind();
+                    $('#delivery-settings-tab input').change(function(){
+                    // console.log('delivery settings changed');
+                        exchangeApp.addButton('delivery-settings-tab', 'delivery-settings-tab');
+                    }); 
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(':( Error: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
+            }
+        });
 
-        exchangeApp.helpText.bind();
-
-       $('#delivery-settings-tab input').change(function(){
-           // console.log('delivery settings changed');
-           exchangeApp.addButton('delivery-settings-tab', 'delivery-settings-tab');
-       });
     });
 }());

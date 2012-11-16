@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="./styles/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="./styles/font-awesome.css">
     <link rel="stylesheet" href="./styles/exchange.css">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <script src="./js/modernizr-2.6.2.js"></script>
     <script src="./js/jquery-1.8.2.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/exchange.js"></script>
@@ -27,23 +25,47 @@
 </nav> 
 
 <div class="container" role="main">
-
+<div class="row-fluid">
+  <div class="span8">
 <h1>Exchange</h1>
-<div id="office365-forwarding" class="well">
-  
 
+<p class="lead" id="lead-account-status">Status: </p>
+
+<div class="alert alert-info">
+<p>Your account changes are pending.</p>
+<div class="progress" id="pending-changes-progress">
+  <div class="bar" style="width: 60%;"></div>
+</div>
+</div>
+
+
+
+<div id="office365-forwarding" class="well">
   <!-- <div class="alert alert-success">
   Success
 </div> -->
-<p id="new-address">Your email address is foo@bar.com. </p>
+<p id="exchange-address">Your email address is foo@bar.com.</p>
 <p id="exchange-link"><a href="#LinkToEmailService" class="external-link"><i class="icon-envelope"></i> Use Exchange Email </a></p>
-<p id="other-message" style="display:none;"></p>
+<p id="other-message"></p>
 <p><a class="btn" href="#" class="external-link" id="show-settings"><i class="icon-cog"></i> Adjust your Settings </a></p>
 </div>
 <!-- end #office365-forwarding -->
 
 
-<div id="settings" style="display:none;">
+<div class="span4">
+
+
+
+</div>
+<!-- end .span4 -->
+
+</div>
+<!-- end .span8 -->
+</div>
+<!-- end .row-fluid -->
+
+
+<div id="bottom-container" style="display:none;">
 
 <ul class="nav nav-tabs">
   <li class="active"><a href="#account-tab" data-toggle="tab">Account <i class="icon-user"></i></a></li>
