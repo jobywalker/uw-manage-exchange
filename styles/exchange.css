@@ -28,6 +28,13 @@ body {
     display:none;
 }
 
+#exchange-address,
+#exchange-link,
+#other-message,
+#pending {
+  display:none;
+}
+
 /* 
 #office365-forwarding {
 	display: none; 
