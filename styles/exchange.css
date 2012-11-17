@@ -30,7 +30,8 @@ body {
 
 #exchange-address,
 #exchange-link,
-#other-message {
+#other-message,
+#pending {
   display:none;
 }
 

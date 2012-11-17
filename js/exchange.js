@@ -89,10 +89,6 @@
             "Mail Permissions" : {
                 "id" : "permissions",
                 "helpText" : "Mail Permissions Help"
-            },
-            "Delegates" : {
-                "id" : "delegates",
-                "helpText" : "Delegates Help"
             }
         }
 
@@ -174,22 +170,35 @@
         display: function (boolean) {
             if (value === true) {
                 $('#bottom-container').show();
-
             } else if (value === false) {
                 $('#bottom-container').hide();
             }
         }
     }
 
-    exchangeApp.tabsDisplay = {
-        account: function (boolean) {
-        //
+    exchangeApp.theTabs.display = {
+        showTab: function (tab) {
+            $('#' + tab + '-tab').show();
         },
-        permissions: function (boolean) { 
-        //
+        account: function (boolean) {
+            if (boolean === true) {
+                $('#account').show();
+            } 
         },
         mailbox: function (boolean) {
-        //     
+            if (boolean === true) {
+                $('#mailbox').show();
+            } 
+        },
+        replyAs: function (boolean) { 
+            if (boolean === true) {
+                $('#reply-as').show();
+            } 
+        },
+        permissions: function (boolean) {
+            if (boolean === true) {
+                $('#permissions').show();
+            }  
         }
     }
 
@@ -225,6 +234,9 @@
         // https://uwnetid.washington.edu/nws/v1/uwnetid/jtate/exchange.json
         exchangeApp.adjustSettings.bind();
 
+        var netID = $.cookie('uwnetid_session');
+        console.log('netID = ' + netID.Value);
+
         $.ajax({
             url: 'user.json',
             dataType: 'json',
@@ -233,6 +245,9 @@
                 console.log(':) Success: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
                 console.log('user status is ' + data.status);
                 var leadStatus = data.status;
+                if (data.pending === true) {
+                    $('#pending').show();
+                }
                 $('#lead-account-status').append(exchangeApp.accountStatus[leadStatus].name);
                 $('#other-message').show().text(exchangeApp.accountStatus[leadStatus].otherMessage)
                 if (data.status === 'gal') {

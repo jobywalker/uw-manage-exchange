@@ -1,4 +1,5 @@
 { 
     "netid" : "jtate",
-    "status" : "gal"
+    "status" : "gal",
+    "pending" : true
 }

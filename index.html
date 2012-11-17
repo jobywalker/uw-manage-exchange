@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="./styles/font-awesome.css">
     <link rel="stylesheet" href="./styles/exchange.css">
     <script src="./js/modernizr-2.6.2.js"></script>
-    <script src="./js/jquery-1.8.2.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/exchange.js"></script>
 </head>
 
 <body>
@@ -31,7 +28,7 @@
 
 <p class="lead" id="lead-account-status">Status: </p>
 
-<div class="alert alert-info">
+<div class="alert alert-info" id="pending">
 <p>Your account changes are pending.</p>
 <div class="progress" id="pending-changes-progress">
   <div class="bar" style="width: 60%;"></div>
@@ -306,6 +303,11 @@
 </div> 
 
 </div> <!-- .container -->
+
+<script src="./js/jquery-1.8.2.min.js"></script>
+<script src="./js/jquery.cookie.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/exchange.js"></script>
 
 </body>
 </html>
