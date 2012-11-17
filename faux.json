@@ -1,1 +1,14 @@
-// empty
+{
+    "UWNetID": "jtate",
+    "replyAs": [
+        {
+            "UWNetID": "jtate"
+        },
+        {
+            "UWNetID": "kermit"
+        },
+        {
+            "UWNetID": "fozzie"
+        }
+    ]
+}

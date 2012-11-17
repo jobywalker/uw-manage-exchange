@@ -41,11 +41,11 @@
 
     function buildReplyAs($scope) {
         $scope.replyAs = {
-            "ids" : {
-                "netid" : "jtate",
-                "netid" : "kermit",
-                "netid" : "fozzie"
-            },
+            "SMTP":  [
+                {"netid" : "jtate" },
+                "fozzie",
+                "kermit"
+            ]
         }
     }
 
@@ -71,7 +71,7 @@
 
 <div ng-controller="buildReplyAs">
     <select> 
-        <option ng-repeat="id in ids">{{ids.netid}}</option>
+        <option ng-repeat="id in replyAs">{{}}</option>
     </select>
 </div>
 
