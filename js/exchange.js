@@ -31,11 +31,17 @@
 
     var exchangeApp = {};
 
-    //exchangeApp.ajaxConsoleLog = function () {
-    //    var jqXHR = {},
-    //        textStatus;
-    //    console.log('jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
-    //};
+    //jqXHR, textStatus, errorThrown
+
+    exchangeApp.ajaxConsoleLog = function (textStatus, jqXHR) {
+        var face;
+        if (textStatus === 'success') {
+            face = ':)';
+        } else {
+            face = ':(';
+        }
+        console.log(face + ' ' +  textStatus.toUpperCase()  + ' -- jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
+    };
 
     exchangeApp.accountStatus = {
         "default": {
@@ -61,7 +67,8 @@
             "id" : "status-gal",
             "helpText" : "GAL help text",
             "modalMessage": "UW Exchange GAL Only message",
-            "otherMessage" : "You only appear in the Exchange GAL but do not have access to email, etc."
+            "otherMessage" : "You only appear in the Exchange GAL but do not have access to email, etc.",
+            "tabs" : ["account", "mailbox"]
         },
         "off": {
             "name" : "Off",
@@ -73,21 +80,29 @@
     }
 
     exchangeApp.theTabs = {
-            "Account" : {
+            "account" : {
+                "name" : "Account",
                 "id" : "account",
-                "helpText" : "Account Help"
+                "helpText" : "Account Help",
+                "icon" : "user"
             },
-            "Mailbox" : {
+            "mailbox" : {
+                "name" : "Mailbox",
                 "id" : "mailbox",
-                "helpText" : "Mailbox Help"
+                "helpText" : "Mailbox Help",
+                "icon" : "inbox"
             },
-            "Reply As" : {
+            "replyAs" : {
+                "name" : "Reply As",
                 "id" : "reply-as",
-                "helpText" : "Reply As Help"
+                "helpText" : "Reply As Help",
+                "icon" : "share-alt"
             },
-            "Mail Permissions" : {
+            "mailPermissions" : {
+                "name" : "Mail Permissions",
                 "id" : "permissions",
-                "helpText" : "Mail Permissions Help"
+                "helpText" : "Mail Permissions Help",
+                "icon" : "unlock"
             }
         }
 
@@ -175,33 +190,22 @@
         }
     }
 
-    exchangeApp.theTabs.display = {
-        showTab: function (tab) {
-            $('#' + tab + '-tab').show();
-        },
-        account: function (boolean) {
-            if (boolean === true) {
-                $('#account').show();
-            } 
-        },
-        mailbox: function (boolean) {
-            if (boolean === true) {
-                $('#mailbox').show();
-            } 
-        },
-        replyAs: function (boolean) { 
-            if (boolean === true) {
-                $('#reply-as').show();
-            } 
-        },
-        permissions: function (boolean) {
-            if (boolean === true) {
-                $('#permissions').show();
-            }  
-        }
+    exchangeApp.theTabs.displayTabs = function () {
+        var html = '',
+            theTabs = exchangeApp.theTabs;
+        $.each(arguments, function (argKey, argValue) {
+            $.each(theTabs, function (theTabsKey, theTabsValue) {
+                if (argValue === theTabsKey) {
+                    html +=  '<li><a href="#' + theTabsValue.id + '-tab" data-toggle="tab">' + theTabsValue.name + ' <i class="icon-' + theTabsValue.icon + '"></i></a></li>';
+                } 
+            })
+        });
+        $('ul.nav').append(html);
     }
 
+
     exchangeApp.setStatus = function (yourStatus) {
+        console.log(yourStatus);
         $('#' + yourStatus).parent().attr('data-selected', 'true');
         var serviceStatus = $('li[data-selected="true"] a').text();
         $('#service-status').text(serviceStatus);
@@ -233,22 +237,32 @@
         // https://uwnetid.washington.edu/nws/v1/uwnetid/jtate/exchange.json
         exchangeApp.adjustSettings.bind();
 
-        var netID = $.cookie('uwnetid_session');
-        console.log('netID = ' + netID.Value);
+
+        //var netID = $.cookie('uwnetid_session');
+        //console.log('netID = ' + netID.Value);
 
         $.ajax({
             url: 'user.json',
             dataType: 'json',
             contentType: 'application/json',
             success: function (data, textStatus, jqXHR) {
-                console.log(':) Success: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
-                console.log('user status is ' + data.status);
+                exchangeApp.ajaxConsoleLog(textStatus, jqXHR);
+                //console.log('user status is ' + data.status);
                 var leadStatus = data.status;
+
+                var tabsToShow = exchangeApp.accountStatus[leadStatus].tabs;
+                console.log('tabsToShow = ' + typeof tabsToShow)
+
+                // account, mailbox, replyAs, mailPermissions
+                exchangeApp.theTabs.displayTabs('account', 'mailbox');  
+                
                 if (data.pending === true) {
                     $('#pending').show();
                 }
-                $('#lead-account-status').append(exchangeApp.accountStatus[leadStatus].name);
-                $('#other-message').show().text(exchangeApp.accountStatus[leadStatus].otherMessage)
+                
+                $('#lead-account-status, #service-status').append(exchangeApp.accountStatus[leadStatus].name);
+                $('#other-message').show().text(exchangeApp.accountStatus[leadStatus].otherMessage);
+
                 if (data.status === 'gal') {
                     //
                 } else {
@@ -258,7 +272,7 @@
                     exchangeApp.statusDropdown();
                     exchangeApp.helpText.bind();
                     $('#delivery-settings-tab input').change(function(){
-                    // console.log('delivery settings changed');
+                        // console.log('delivery settings changed');
                         exchangeApp.addButton('delivery-settings-tab', 'delivery-settings-tab');
                     }); 
                 }

@@ -35,6 +35,14 @@ body {
   display:none;
 }
 
+
+/* a[href="#account-tab"],
+a[href="#mailbox-tab"],
+a[href="#reply-as-tab"],
+a[href="#permissions-tab"] {
+  display: none;
+} */
+
 /* 
 #office365-forwarding {
 	display: none; 
