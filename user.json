@@ -1,5 +1,10 @@
 { 
     "netid" : "jtate",
     "status" : "off",
-    "pending" : true
+    "pending" : true,
+    "SMTP" : [
+        "jtate@uw.edu",
+        "kermit@uw.edu",
+        "fozzie@uw.edu"
+    ]
 }

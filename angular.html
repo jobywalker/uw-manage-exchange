@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="./styles/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="./styles/font-awesome.css">
     <link rel="stylesheet" href="./styles/exchange.css">
-    <script src="./js/modernizr.custom.31329.js"></script>
-    <script src="./js/angular.min.js"></script>
+    <script src="./js/modernizr-2.6.2.js"></script>
+    <script src="./js/knockout-2.2.0.min.js"></script>
     <script>
 
+        exchangeApp = {};
 
-    function buildTabs($scope) {
-        $scope.theTabs = {
+        exchangeApp.theTabs = {
             "Account" : {
                 "id" : "account",
                 "helpText" : "Account Help"
@@ -37,17 +37,18 @@
             }
         }
 
-    }
-
-    function buildReplyAs($scope) {
-        $scope.replyAs = {
-            "SMTP":  [
-                {"netid" : "jtate" },
-                "fozzie",
-                "kermit"
-            ]
+var SimpleListModel = function(items) {
+    this.items = ko.observableArray(items);
+    this.itemToAdd = ko.observable("");
+    this.addItem = function() {
+        if (this.itemToAdd() != "") {
+            this.items.push(this.itemToAdd()); // Adds the item. Writing to the "items" observableArray causes any associated UI to update.
+            this.itemToAdd(""); // Clears the text box, because it's bound to the "itemToAdd" observable
         }
-    }
+    }.bind(this);  // Ensure that "this" is always this view model
+};
+ 
+ko.applyBindings(new SimpleListModel(["Alpha", "Beta", "Gamma"]));
 
     </script>
 </head>
@@ -56,33 +57,22 @@
 
 <div class="container" role="main">
 
+<form data-bind="submit: addItem">
+    New item:
+    <input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
+    <button type="submit" data-bind="enable: itemToAdd().length > 0">Add</button>
+    <p>Your items:</p>
+    <select multiple="multiple" width="50" data-bind="options: items"> </select>
+</form>
 
-<div ng-controller="buildTabs">
-    <ul class="nav nav-tabs">
-        <li ng-repeat="(key,value) in theTabs"><a href="#{{value.id}}" data-toggle="tab">{{key}}</a></li>
-    </ul>
-    <div class="tab-content">
-        <div ng-repeat="(key,value) in theTabs" id="{{value.id}}" class="tab-pane">
-            <h2> {{key}} Tab</h2>
-        </dv
-    </div>
-</div>
-
-
-<div ng-controller="buildReplyAs">
-    <select> 
-        <option ng-repeat="id in replyAs">{{}}</option>
-    </select>
-</div>
 
 
 
 </div>
 <!-- end .container -->
 
-<script src="./js/jquery-1.8.2.min.js"></script>
+<script src="./js/jquery-1.8.3.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
-<script src="./js/exchange.js"></script>
 
 </body>
 </html>
