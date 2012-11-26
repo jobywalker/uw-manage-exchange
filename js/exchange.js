@@ -48,19 +48,37 @@
             "name" : "Default",
             "id" : "status-auto",
             "helpText" : "Automatic help text",
-            "modalMessage": "Automatic message"
+            "modalMessage": "Automatic message",
+            "tabs" : [
+                "account", 
+                "mailbox",
+                "replyAs",
+                "mailPermissions"
+            ]
         },
         "exchange": {
             "name" : "UW Exchange",
             "id" : "status-uw-exchange",
             "helpText" : "UW Exchange help text",
-            "modalMessage": "UW Exchange message"
+            "modalMessage": "UW Exchange message",
+            "tabs" : [
+                "account", 
+                "mailbox",
+                "replyAs",
+                "mailPermissions"
+            ]
         },
         "local": {
             "name" : "exchange Local",
             "id" : "status-exchange-local",
             "helpText" : "Exchange Local help text",
-            "modalMessage": "UW Exchange Local message"
+            "modalMessage": "UW Exchange Local message",
+            "tabs" : [
+                "account", 
+                "mailbox",
+                "replyAs",
+                "mailPermissions"
+            ]
         },
         "gal": {
             "name" : "Exchange GAL Only",
@@ -68,14 +86,19 @@
             "helpText" : "GAL help text",
             "modalMessage": "UW Exchange GAL Only message",
             "otherMessage" : "You only appear in the Exchange GAL but do not have access to email, etc.",
-            "tabs" : ["account", "mailbox"]
+            "tabs" : [
+                "account"
+            ]
         },
         "off": {
             "name" : "Off",
             "id" : "status-off",
             "helpText" : "Off help text",
             "modalMessage": "Turning off UW Exchange. This is a destructive action and will do x and y.",
-            "otherMessage" : "Your account is not configured to use Exchange."
+            "otherMessage" : "Your account is not configured to use Exchange.",
+            "tabs" : [
+                "account"
+            ]
         }
     }
 
@@ -107,28 +130,14 @@
         }
 
     exchangeApp.modalCloseMessage = function () {
-        console.log('running modalClose')
-
-        // tab options
-
-        // placement options
-
-
+        console.log('running modalClose');
         $('#save-modal').click(function () {
             var message = '<div class="alert alert-success">' + 
               '<button type="button" class="close" data-dismiss="alert">×</button>' +
               'Account change successful.' +
             '</div>';
-
             $('.container').prepend(message);
-            //if (placement === 'top') {
-            //    $('#' + tab).prepend(message);
-//
-            //} else if (placement === 'bottom') {
-            //    $('#' + tab).append(message);
-            //}
         });
-        //console.log('successAlert where = ' + tab)
     }
     
     exchangeApp.addButton = function (clickedStatus, tabId, placeSuccess) {
@@ -178,29 +187,37 @@
     exchangeApp.adjustSettings = {
         bind: function () {
             $('#show-settings').click(function() {
+                //console.log('')
                 $('#bottom-container').fadeIn();
             });
         },
-        display: function (boolean) {
-            if (value === true) {
-                $('#bottom-container').show();
-            } else if (value === false) {
-                $('#bottom-container').hide();
+        display: function (status) {
+            var tabsToBuild = exchangeApp.accountStatus[status].tabs,
+                html = '';
+            if (tabsToBuild !== undefined) {
+                $.each(tabsToBuild, function (k, v) {
+                    v = exchangeApp.theTabs[v];                
+                    html +=  '<li><a href="#' + v.id + '-tab" data-toggle="tab">' + v.name + ' <i class="icon-' + v.icon + '"></i></a></li>';
+                });
+                $('ul.nav').append(html);            
             }
         }
     }
 
-    exchangeApp.theTabs.displayTabs = function () {
+    exchangeApp.theTabs.displayTabs = function (status) {
         var html = '',
             theTabs = exchangeApp.theTabs;
-        $.each(arguments, function (argKey, argValue) {
-            $.each(theTabs, function (theTabsKey, theTabsValue) {
-                if (argValue === theTabsKey) {
-                    html +=  '<li><a href="#' + theTabsValue.id + '-tab" data-toggle="tab">' + theTabsValue.name + ' <i class="icon-' + theTabsValue.icon + '"></i></a></li>';
-                } 
-            })
-        });
-        $('ul.nav').append(html);
+
+        console.log('displayTabs status detected is ' + exchangeApp.accountStatus[status]);
+
+        //$.each(arguments, function (argKey, argValue) {
+            //$.each(theTabs, function (theTabsKey, theTabsValue) {
+            ////    if (argValue === theTabsKey) {
+            //        h//tml +=  '<li><a href="#' + theTabsValue.id + '-tab" data-toggle="tab">' + theTabsValue.name + ' <i //class="icon//-' + theTabsValue.icon + '"></i></a></li>';
+            ////    } 
+            //});
+        //});
+        //$('ul.nav').append(html);
     }
 
 
@@ -210,7 +227,6 @@
         var serviceStatus = $('li[data-selected="true"] a').text();
         $('#service-status').text(serviceStatus);
     }
-    
 
     exchangeApp.helpText = {
         bind : function () {
@@ -235,6 +251,7 @@
     $(function(){
         //console.log('document ready');
         // https://uwnetid.washington.edu/nws/v1/uwnetid/jtate/exchange.json
+        //console.log('running adjustSettings.bind')
         exchangeApp.adjustSettings.bind();
 
 
@@ -247,35 +264,39 @@
             contentType: 'application/json',
             success: function (data, textStatus, jqXHR) {
                 exchangeApp.ajaxConsoleLog(textStatus, jqXHR);
-                //console.log('user status is ' + data.status);
-                var leadStatus = data.status;
+                //console.log('$.ajax user status is' + data.status)
+                var userStatus = data.status,
+                    tabsToShow = exchangeApp.accountStatus[userStatus].tabs;
 
-                var tabsToShow = exchangeApp.accountStatus[leadStatus].tabs;
-                console.log('tabsToShow = ' + typeof tabsToShow)
+                console.log('running asjustSettings.display');
+                //console.log('tabsToShow = ' + tabsToShow + ', typeof = ' + typeof tabsToShow)
+                exchangeApp.adjustSettings.display(userStatus);
+
+
 
                 // account, mailbox, replyAs, mailPermissions
-                exchangeApp.theTabs.displayTabs('account', 'mailbox');  
+                //exchangeApp.theTabs.displayTabs(tabsToShow);  
                 
                 if (data.pending === true) {
                     $('#pending').show();
                 }
                 
-                $('#lead-account-status, #service-status').append(exchangeApp.accountStatus[leadStatus].name);
-                $('#other-message').show().text(exchangeApp.accountStatus[leadStatus].otherMessage);
+                $('#lead-account-status, #service-status').append(exchangeApp.accountStatus[userStatus].name);
+                $('#other-message').show().text(exchangeApp.accountStatus[userStatus].otherMessage);
 
-                if (data.status === 'gal') {
-                    //
-                } else {
-                    exchangeApp.setStatus('status-auto');
-                    // bind the showSettings stuff
-                    // this is more binding, but of the lame kind
-                    exchangeApp.statusDropdown();
-                    exchangeApp.helpText.bind();
-                    $('#delivery-settings-tab input').change(function(){
-                        // console.log('delivery settings changed');
-                        exchangeApp.addButton('delivery-settings-tab', 'delivery-settings-tab');
-                    }); 
-                }
+                //if (data.status === 'gal') {
+                //    //
+                //} else {
+                //    exchangeApp.setStatus('status-auto');
+                //    // bind the showSettings stuff
+                //    // this is more binding, but of the lame kind
+                //    exchangeApp.statusDropdown();
+                //    exchangeApp.helpText.bind();
+                //    $('#delivery-settings-tab input').change(function(){
+                //        // console.log('delivery settings changed');
+                //        exchangeApp.addButton('delivery-settings-tab', 'delivery-settings-tab');
+                //    }); 
+                //}
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(':( Error: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
