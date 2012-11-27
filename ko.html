@@ -17,14 +17,10 @@
 
 <div class="container" role="main">
 
-<form data-bind="submit: addItem">
-    New item:
-    <input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
-    <button type="submit" data-bind="enable: itemToAdd().length > 0">Add</button>
-    <p>Your items:</p>
-    <select multiple="multiple" width="50" data-bind="options: items"> </select>
-</form>
 
+<p>
+    SMTP is <span data-bind="text: SMTP"></span>
+</p>
 
 
 </div>
@@ -35,44 +31,18 @@
     <script>
 
 
-    function buildTabs($scope) {
-        $scope.theTabs = {
-            "Account" : {
-                "id" : "account",
-                "helpText" : "Account Help"
-            },
-            "Mailbox" : {
-                "id" : "mailbox",
-                "helpText" : "Mailbox Help"
-            },
-            "Reply As" : {
-                "id" : "reply-as",
-                "helpText" : "Reply As Help"
-            },
-            "Mail Permissions" : {
-                "id" : "permissions",
-                "helpText" : "Mail Permissions Help"
-            },
-            "Delegates" : {
-                "id" : "delegates",
-                "helpText" : "Delegates Help"
-            }
-        }
-
-    }
-
-var SimpleListModel = function(items) {
-    this.items = ko.observableArray(items);
-    this.itemToAdd = ko.observable("");
-    this.addItem = function() {
-        if (this.itemToAdd() != "") {
-            this.items.push(this.itemToAdd()); // Adds the item. Writing to the "items" observableArray causes any associated UI to update.
-            this.itemToAdd(""); // Clears the text box, because it's bound to the "itemToAdd" observable
-        }
-    }.bind(this);  // Ensure that "this" is always this view model
-};
+var userViewModel = { 
+    "netid" : "jtate",
+    "status" : "off",
+    "pending" : true,
+    "SMTP" : [
+        {"uw" : "jtate@uw.edu"},
+        {"uw" : "kermit@uw.edu"},
+        {"uw" : "fozzie@uw.edu"}   
+    ]
+}
  
-ko.applyBindings(new SimpleListModel(["Alpha", "Beta", "Gamma"]));
+ko.applyBindings(userViewModel)
 
     </script>
 </body>
