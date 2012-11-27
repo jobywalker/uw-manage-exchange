@@ -282,7 +282,7 @@
             $.each(exchangeApp.accountStatus, function (k, v) {
                     html +=  '<h4>' + v.name +'</h4><p>' + v.helpText + '</p>';
                 });
-            $('.help-well').append(html);
+            $('.help-well').html(html);
         }
     };
 
