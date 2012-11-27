@@ -1,0 +1,61 @@
+{
+        "default": {
+            "name" : "Default",
+            "id" : "status-auto",
+            "helpText" : "Automatic help text",
+            "modalMessage": "Automatic message",
+            "otherMessage" : "UW is managing your Exchange settings",
+            "tabs" : [
+                "account", 
+                "mailbox",
+                "replyAs",
+                "mailPermissions"
+            ]
+        },
+        "exchange": {
+            "name" : "UW Exchange",
+            "id" : "status-uw-exchange",
+            "helpText" : "UW Exchange help text",
+            "modalMessage": "UW Exchange message",
+            "otherMessage" : "You're using Exchange.",
+            "tabs" : [
+                "account", 
+                "mailbox",
+                "replyAs",
+                "mailPermissions"
+            ]
+        },
+        "local": {
+            "name" : "Exchange Local",
+            "id" : "status-exchange-local",
+            "helpText" : "Exchange Local help text",
+            "modalMessage": "UW Exchange Local message",
+            "otherMessage" : "You're using Exchange Local.",
+            "tabs" : [
+                "account", 
+                "mailbox",
+                "replyAs",
+                "mailPermissions"
+            ]
+        },
+        "gal": {
+            "name" : "Exchange GAL Only",
+            "id" : "status-gal",
+            "helpText" : "GAL help text",
+            "modalMessage": "UW Exchange GAL Only message",
+            "otherMessage" : "You only appear in the Exchange GAL but do not have access to email, etc.",
+            "tabs" : [
+                "account"
+            ]
+        },
+        "off": {
+            "name" : "Off",
+            "id" : "status-off",
+            "helpText" : "Off help text",
+            "modalMessage": "Turning off UW Exchange. This is a destructive action and will do x and y.",
+            "otherMessage" : "Your account is not configured to use Exchange.",
+            "tabs" : [
+                "account"
+            ]
+        }
+    }

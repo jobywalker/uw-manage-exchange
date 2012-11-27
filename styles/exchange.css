@@ -31,7 +31,8 @@ body {
 #exchange-address,
 #exchange-link,
 #other-message,
-#pending {
+#pending,
+#ready {
   display:none;
 }
 

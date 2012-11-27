@@ -37,6 +37,14 @@
         }
     };
 
+    exchangeApp.accountState = function (arg) {
+        if (arg === 'pending') {
+            $('#pending').show();
+        } else if (arg === "ready") {
+            $('#ready').show();
+        }
+    };
+
     //jqXHR, textStatus, errorThrown
 
     exchangeApp.ajaxConsoleLog = function (textStatus, jqXHR) {
@@ -50,6 +58,30 @@
     };
     
     //tabs: account, mailbox, replyAs, mailPermissions
+
+    //exchangeApp.accountStatus = function () {
+    //    console.log('running .accountStatus')
+//
+    //    
+//
+    //    $.ajax({
+    //        url: 'accounts.json',
+    //        dataType: 'json',
+    //        contentType: 'application/json',
+    //        success: function (data, textStatus, jqXHR) {
+    //            exchangeApp.ajaxConsoleLog(textStatus, jqXHR);
+    //            //console.log('$.ajax user status = ' + data.status)
+    //            return data;
+    //        },
+    //        error: function (jqXHR, textStatus, errorThrown) {
+    //            console.log(':( Error: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
+    //        }
+    //    });
+    //    exchangeApp.accountStatus();
+    //}
+
+
+
 
     exchangeApp.accountStatus = {
         "default": {
@@ -199,7 +231,16 @@
         bind: function () {
             $('#show-settings').click(function() {
                 //console.log('')
-                $('#bottom-container').fadeIn();
+                $('#bottom-container').fadeToggle(function () { 
+                    if ($(this).is(":visible") === true) {
+                        $('#show-settings span').text('Close Settings');
+                    } else {
+                        $('#show-settings span').text('Adjust Settings');
+
+                    }
+
+                });
+
             });
         },
         display: function (status) {
@@ -227,15 +268,21 @@
             $('.help').click(function() {
                 console.log('help for = ' + userStatus);
                 var helpText = exchangeApp.accountStatus[userStatus].helpText;
-                $('.help-well').toggle().html(helpText);
+                $('.help-well').toggle().append(helpText);
+                var html;
+            $.each(exchangeApp.accountStatus, function (k, v) {
+                    html +=  '<h4>' + v.name +'</h4><p>' + v.helpText + '</p>';
+                });
+            $('.help-well').append(html);
             });
         },
         display : function () {
+            // console.log('running display helptext')
             var html;
             $.each(exchangeApp.accountStatus, function (k, v) {
-                    html +=  '<p>' + v.helpText + '</p>';
+                    html +=  '<h4>' + v.name +'</h4><p>' + v.helpText + '</p>';
                 });
-            $('p.help-well').append(html);
+            $('.help-well').append(html);
         }
     };
 
@@ -262,7 +309,7 @@
                 //console.log('$.ajax user status = ' + data.status)
                 var userStatus = data.status,
                     tabsToShow = exchangeApp.accountStatus[userStatus].tabs;
-                exchangeApp.pending(data.pending);
+                exchangeApp.accountState(data.accountState);
                 exchangeApp.adjustSettings.display(userStatus);
                 exchangeApp.helpText.bind(userStatus);
                 //console.log(exchangeApp.accountStatus[userStatus].otherMessage)

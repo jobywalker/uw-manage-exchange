@@ -2,6 +2,8 @@
     "netid" : "jtate",
     "status" : "local",
     "pending" : false,
+    "ready" : true,
+    "accountState" : "pending",
     "SMTP" : [
         {"uw" : "jtate@uw.edu"},
         {"uw" : "kermit@uw.edu"},
