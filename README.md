@@ -1,4 +1,4 @@
 uw-manage-exchange
 ==================
 
-using http://get.inject.io/n/XxsZ6RE7
+All wording here, there and everywhere in this app is boilerplate/placeholder goodness. 
