@@ -29,6 +29,7 @@
 
     'use strict';
 
+    // namespacing so it doesn't collide with pre-existing JavaScript 
     var exchangeApp = {};
 
     exchangeApp.pending = function (value) {
@@ -59,29 +60,22 @@
     
     //tabs: account, mailbox, replyAs, mailPermissions
 
-    //exchangeApp.accountStatus = function () {
-    //    console.log('running .accountStatus')
-//
-    //    
-//
-    //    $.ajax({
-    //        url: 'accounts.json',
-    //        dataType: 'json',
-    //        contentType: 'application/json',
-    //        success: function (data, textStatus, jqXHR) {
-    //            exchangeApp.ajaxConsoleLog(textStatus, jqXHR);
-    //            //console.log('$.ajax user status = ' + data.status)
-    //            return data;
-    //        },
-    //        error: function (jqXHR, textStatus, errorThrown) {
-    //            console.log(':( Error: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
-    //        }
-    //    });
-    //    exchangeApp.accountStatus();
-    //}
-
-
-
+    exchangeApp.accountStatus = function () {
+        console.log('running .accountStatus')
+        $.ajax({
+            url: 'accounts.json',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data, textStatus, jqXHR) {
+                exchangeApp.ajaxConsoleLog(textStatus, jqXHR);
+                //console.log('$.ajax user status = ' + data.status)
+                return data;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(':( Error: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
+            }
+        });
+    }
 
     exchangeApp.accountStatus = {
         "default": {
@@ -290,12 +284,12 @@
         //stuff
     };
 
+
     $(function(){
         //console.log('document ready');
         // https://uwnetid.washington.edu/nws/v1/uwnetid/jtate/exchange.json
         //console.log('running adjustSettings.bind')
         exchangeApp.adjustSettings.bind();
-
 
         //var netID = $.cookie('uwnetid_session');
         //console.log('netID = ' + netID.Value);
