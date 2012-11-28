@@ -1,0 +1,62 @@
+/* Add top padding for navbar-top-fixed */
+/* http://webdesigntutsplus.s3.amazonaws.com/tuts/319_bootstrap_pills_tabs/Tabs-Pills-BEGIN/navbar-examples.html */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+  }
+/* Remove top padding when top navbar goes static in narrow viewports */
+@media (max-width: 979px) {
+  body {
+    padding-top: 0;
+  }
+}
+
+.dropdown-menu .divider {
+ height:1px;
+
+}
+
+#save-changes {
+    display:none;
+}
+
+.help:hover {
+  cursor: pointer;
+}
+
+.help-well {
+    display:none;
+}
+
+#exchange-address,
+#exchange-link,
+#other-message,
+#pending,
+#ready {
+  display:none;
+}
+
+
+/* a[href="#account-tab"],
+a[href="#mailbox-tab"],
+a[href="#reply-as-tab"],
+a[href="#permissions-tab"] {
+  display: none;
+} */
+
+/* 
+#office365-forwarding {
+	display: none; 
+}
+
+
+#service-details {
+	display:none;
+}
+
+
+#settings-container {
+	display:none;
+}
+
+*/

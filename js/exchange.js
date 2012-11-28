@@ -272,7 +272,7 @@
         },
         display : function () {
             // console.log('running display helptext')
-            var html;
+            var html = '';
             $.each(exchangeApp.accountStatus, function (k, v) {
                     html +=  '<h4>' + v.name +'</h4><p>' + v.helpText + '</p>';
                 });
