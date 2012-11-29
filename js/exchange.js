@@ -263,7 +263,7 @@
                 console.log('help for = ' + userStatus);
                 var helpText = exchangeApp.accountStatus[userStatus].helpText;
                 $('.help-well').toggle().append(helpText);
-                var html;
+                var html = '';
             $.each(exchangeApp.accountStatus, function (k, v) {
                     html +=  '<h4>' + v.name +'</h4><p>' + v.helpText + '</p>';
                 });
