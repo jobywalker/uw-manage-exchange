@@ -29,17 +29,12 @@
 
     'use strict';
 
+
     // namespacing so it doesn't collide with pre-existing JavaScript 
     var exchangeApp = {};
 
-    exchangeApp.pending = function (value) {
-        if (value === true) {
-            $('#pending').show();
-        }
-    };
-
     exchangeApp.accountState = function (arg) {
-        if (arg === 'pending') {
+        if (arg === 'pending' || location.) {
             $('#pending').show();
         } else if (arg === "ready") {
             $('#ready').show();
@@ -290,6 +285,8 @@
         // https://uwnetid.washington.edu/nws/v1/uwnetid/jtate/exchange.json
         //console.log('running adjustSettings.bind')
         exchangeApp.adjustSettings.bind();
+        
+        window.history.pushState(data, "Title", "/new-url");
 
         //var netID = $.cookie('uwnetid_session');
         //console.log('netID = ' + netID.Value);
