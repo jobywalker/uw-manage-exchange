@@ -7,9 +7,10 @@
     var exchangeApp = {};
 
     exchangeApp.accountState = function (arg) {
-        if (arg === 'pending') {
+        var state = getURLParameter('state'); 
+        if (state === 'pending') {
             $('#pending').show();
-        } else if (arg === "ready") {
+        } else if (state === 'ready') {
             $('#ready').show();
         }
     };
@@ -207,7 +208,7 @@
     };
 
     exchangeApp.setStatus = function (yourStatus) {
-        console.log(yourStatus);
+        console.log('setStatus is ' + yourStatus);
         $('#' + yourStatus).parent().attr('data-selected', 'true');
         var serviceStatus = $('li[data-selected="true"] a').text();
         $('#service-status').text(serviceStatus);
@@ -241,10 +242,17 @@
     };
 
 
-    $(function(){
+    $(function () {
         //console.log('document ready');
         // https://uwnetid.washington.edu/nws/v1/uwnetid/jtate/exchange.json
         //console.log('running adjustSettings.bind')
+
+        var test = getURLParameter('test')
+            if (test === 'true') {
+                $('#test-mode').show();
+            }
+        
+
         exchangeApp.adjustSettings.bind();
         
         //window.history.pushState(data, "Title", "/new-url");
@@ -252,26 +260,57 @@
         //var netID = $.cookie('uwnetid_session');
         //console.log('netID = ' + netID.Value);
 
-        $.ajax({
-            url: 'user.json',
-            dataType: 'json',
-            contentType: 'application/json',
-            success: function (data, textStatus, jqXHR) {
-                ajaxConsoleLog('dom ready call', textStatus, jqXHR);
-                //console.log('$.ajax user status = ' + data.status)
-                var userStatus = data.status,
+        //$.ajax({
+        //    url: 'user.json',
+        //    dataType: 'json',
+        //    contentType: 'application/json',
+        //    success: function (data, textStatus, jqXHR) {
+        //        ajaxConsoleLog('dom ready call', textStatus, jqXHR);
+        //        //console.log('$.ajax user status = ' + data.status)
+        //        var userStatus = data.status,
+        //            tabsToShow = exchangeApp.accountStatus[userStatus].tabs;
+        //        exchangeApp.accountState(data.accountState);
+        //        exchangeApp.adjustSettings.display(userStatus);
+        //        exchangeApp.helpText.bind(userStatus);
+        //        //console.log(exchangeApp.accountStatus[userStatus].otherMessage)
+        //        $('#lead-account-status span, #service-status').append(exchangeApp.accountStatus[userStatus].name);
+        //        $('#other-message').show().text(exchangeApp.accountStatus[userStatus].otherMessage);
+        //    },
+        //    error: function (jqXHR, textStatus, errorThrown) {
+        //        console.log(':( Error: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
+        //    }
+        //});
+            
+
+                var userStatus = getURLParameter('status'),
                     tabsToShow = exchangeApp.accountStatus[userStatus].tabs;
-                exchangeApp.accountState(data.accountState);
+                //exchangeApp.accountState(data.accountState);
                 exchangeApp.adjustSettings.display(userStatus);
                 exchangeApp.helpText.bind(userStatus);
+                exchangeApp.accountState();
                 //console.log(exchangeApp.accountStatus[userStatus].otherMessage)
                 $('#lead-account-status span, #service-status').append(exchangeApp.accountStatus[userStatus].name);
                 $('#other-message').show().text(exchangeApp.accountStatus[userStatus].otherMessage);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(':( Error: jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
-            }
-        });
+        
+        //unction theForm() {
+        //   var userStatus = $('input:radio[name=status-radios]:checked').val(),
+        //       //var userStatus = getURLParameter('status'),
+        //       tabsToShow = exchangeApp.accountStatus[userStatus].tabs;
+        //       //exchangeApp.accountState(data.accountState);
+        //       exchangeApp.adjustSettings.display(userStatus);
+        //       exchangeApp.helpText.bind(userStatus);
+        //       exchangeApp.accountState();
+        //       //console.log(exchangeApp.accountStatus[userStatus].otherMessage)
+        //       $('#lead-account-status span, #service-status').text(exchangeApp.accountStatus[userStatus].name);
+        //       $('#other-message').show().text(exchangeApp.accountStatus[userStatus].otherMessage);
+        //   }
+
+        //       $('input:radio[name=status-radios]').change(function(){
+        //           theForm(); 
+        //       });
+        //   
+        //   theForm();
+
 
     });
 }());
