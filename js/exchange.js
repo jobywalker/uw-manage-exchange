@@ -1,30 +1,3 @@
-/* global $ */
-
-// https://github.com/h5bp/html5-boilerplate/blob/master/js/plugins.js
-// Avoid `console` errors in browsers that lack a console.
-(function() {
-    var method;
-    var noop = function noop() {};
-    var methods = [
-        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-        'timeStamp', 'trace', 'warn'
-    ];
-    var length = methods.length;
-    var console = (window.console = window.console || {});
-
-    while (length--) {
-        method = methods[length];
-
-        // Only stub undefined methods.
-        if (!console[method]) {
-            console[method] = noop;
-        }
-    }
-}());
-
-
 (function () {
 
     'use strict';
@@ -34,23 +7,11 @@
     var exchangeApp = {};
 
     exchangeApp.accountState = function (arg) {
-        if (arg === 'pending' || location.) {
+        if (arg === 'pending') {
             $('#pending').show();
         } else if (arg === "ready") {
             $('#ready').show();
         }
-    };
-
-    //jqXHR, textStatus, errorThrown
-
-    exchangeApp.ajaxConsoleLog = function (textStatus, jqXHR) {
-        var face;
-        if (textStatus === 'success') {
-            face = ':)';
-        } else {
-            face = ':(';
-        }
-        console.log(face + ' ' +  textStatus.toUpperCase()  + ' -- jqXHR.statusText = ' + jqXHR.statusText + ', textStatus = ' + textStatus);
     };
     
     //tabs: account, mailbox, replyAs, mailPermissions
@@ -62,7 +23,7 @@
             dataType: 'json',
             contentType: 'application/json',
             success: function (data, textStatus, jqXHR) {
-                exchangeApp.ajaxConsoleLog(textStatus, jqXHR);
+                ajaxConsoleLog('accountStatus', textStatus, jqXHR);
                 //console.log('$.ajax user status = ' + data.status)
                 return data;
             },
@@ -286,7 +247,7 @@
         //console.log('running adjustSettings.bind')
         exchangeApp.adjustSettings.bind();
         
-        window.history.pushState(data, "Title", "/new-url");
+        //window.history.pushState(data, "Title", "/new-url");
 
         //var netID = $.cookie('uwnetid_session');
         //console.log('netID = ' + netID.Value);
@@ -296,7 +257,7 @@
             dataType: 'json',
             contentType: 'application/json',
             success: function (data, textStatus, jqXHR) {
-                exchangeApp.ajaxConsoleLog(textStatus, jqXHR);
+                ajaxConsoleLog('dom ready call', textStatus, jqXHR);
                 //console.log('$.ajax user status = ' + data.status)
                 var userStatus = data.status,
                     tabsToShow = exchangeApp.accountStatus[userStatus].tabs;
