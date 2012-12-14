@@ -5,7 +5,7 @@ This is the UI to manage the upcoming UW Exchange service.
 
 You can:
 
-* Play with [a how-to below](https://github.com/jodytate/uw-manage-exchange#testing) and test the demo: [http://jodytate.github.com/uw-manage-exchange/index.html?status=off](http://jodytate.github.com/uw-manage-exchange/index.html?status=off)
+* Play with ([a how-to below])(https://github.com/jodytate/uw-manage-exchange#testing) and test the demo: [http://jodytate.github.com/uw-manage-exchange/index.html?status=off](http://jodytate.github.com/uw-manage-exchange/index.html?status=off)
 * View the source: [https://github.com/jodytate/uw-manage-exchange](https://github.com/jodytate/uw-manage-exchange)
 
 Technologies Used
