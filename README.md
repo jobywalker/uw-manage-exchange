@@ -1,6 +1,28 @@
 UW Exchange Service, or Office 365
 ===================================
 
+This is the UI to manage the upcoming UW Exchange service. 
+
+You can:
+
+* Play with [a how-to below](https://github.com/jodytate/uw-manage-exchange#testing) and test the demo: [http://jodytate.github.com/uw-manage-exchange/index.html?status=off](http://jodytate.github.com/uw-manage-exchange/index.html?status=off)
+* View the source: [https://github.com/jodytate/uw-manage-exchange](https://github.com/jodytate/uw-manage-exchange)
+
+Technologies Used
+-----------------
+
+This small web app uses:
+
+* [HTML5](http://developers.whatwg.org/)
+* [CSS3](http://www.w3.org/Style/CSS/)
+* [JavaScript](https://developer.mozilla.org/en-US/docs/JavaScript)
+* [jQuery](http://jquery.com/)
+* [Bootstrap](http://twitter.github.com/bootstrap/)
+* [Font Awesome](http://fortawesome.github.com/Font-Awesome/)
+* [Modernizr](http://modernizr.com/)
+* [Grunt](http://gruntjs.com/)
+* [Sass](http://sass-lang.com/)
+
 Testing
 -------
 
