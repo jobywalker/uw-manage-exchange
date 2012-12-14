@@ -17,8 +17,18 @@ For example you can try:
 
     index.html?test=true&status=default&state=pending
 
-Status can be: default, exchange, local, gal, off
+Status can be: 
 
-State can be: pending, ready, problem
+* default 
+* exchange
+* local 
+* gal
+* off
+
+State can be: 
+
+* pending
+* ready 
+* problem
 
 Test is true if you're testing. Otherwise, well, it's not true.
