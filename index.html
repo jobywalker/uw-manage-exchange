@@ -53,6 +53,10 @@
 <p><span class="label label-success">Ready</span> Your account is ready to use.</p>
 </div>
 
+<div class="alert alert-error" id="problem" style="display:none;">
+<p><strong>Important</strong><br/> There is a problem.</p>
+<button type="button" class="btn btn-danger btn-small">Contact Help</button></div>
+
 
 <div id="office365-forwarding" class="well">
   <!-- <div class="alert alert-success">
@@ -74,9 +78,12 @@
 <div class="span4 help-column">
 
     <div id="test-mode" class="alert alert-info" style="display:none;">
-              <span class="label label-info">Test Mode</span> For testing, debugging and other purposes.
+        <p><strong>Testing Parameters</strong></p>
+              <span class="label label-info">STATE</span> pending, ready, problem<br/><br/>
+              <span class="label label-info">STATUS</span> default, exchange, local, gal, off
+
     <div>
-        
+
         <!-- <br/>
     <h4>Status</h4>
 <label class="radio">
@@ -115,9 +122,9 @@ Ready</label>
 
 <label class="radio">
   <input type="radio" name="state-radios" id="problem-radio" value="problem">
-Problem</label>
+Problem</label> -->
 
-    </div>  -->      
+    </div>        
 
     </div>
 

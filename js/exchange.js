@@ -12,6 +12,8 @@
             $('#pending').show();
         } else if (state === 'ready') {
             $('#ready').show();
+        } else if (state === 'problem') {
+            $('#problem').show();
         }
     };
     
