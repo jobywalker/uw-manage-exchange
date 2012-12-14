@@ -161,13 +161,13 @@
             $('#other-message').html(offOrGAL).fadeIn();
         };
 
-        if (statusSet === 'Off') {
-            offOrGALMessage(otherMessage);
-        } else if (statusSet === 'Exchange GAL Only') {
-            offOrGALMessage(otherMessage);
-        } else if (statusSet === 'UW Exchange') {
-            //
-        }
+        //if (statusSet === 'Off') {
+        //    offOrGALMessage(otherMessage);
+        //} else if (statusSet === 'Exchange GAL Only') {
+        //    offOrGALMessage(otherMessage);
+        //} else if (statusSet === 'UW Exchange') {
+        //    //
+        //}
         $('#save-modal').click(function (){
             exchangeApp.modalCloseMessage();
         });
@@ -175,8 +175,10 @@
     
     exchangeApp.statusDropdown = function () {
         $('#status-dropdown li a').click(function(){
+            console.log('dropdown clicked')
             var clicked = $(this).text();
             exchangeApp.addButton(clicked, 'account-tab', 'settings');
+            exchangeApp.saveModal();
         });
     };
 
@@ -290,6 +292,8 @@
                 exchangeApp.adjustSettings.display(userStatus);
                 exchangeApp.helpText.bind(userStatus);
                 exchangeApp.accountState();
+                                exchangeApp.statusDropdown();
+
                 //console.log(exchangeApp.accountStatus[userStatus].otherMessage)
                 $('#lead-account-status span, #service-status').append(exchangeApp.accountStatus[userStatus].name);
                 $('#other-message').show().text(exchangeApp.accountStatus[userStatus].otherMessage);
